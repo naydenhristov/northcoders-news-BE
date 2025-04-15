@@ -1,6 +1,6 @@
 module.exports = [
   {
-    article_title: "They're not exactly dogs, are they?",
+    article_title: "They''re not exactly dogs, are they?",
     body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
     votes: 16,
     author: "butter_bridge",
@@ -112,7 +112,7 @@ module.exports = [
     created_at: 1602433380000,
   },
   {
-    article_title: "They're not exactly dogs, are they?",
+    article_title: "They''re not exactly dogs, are they?",
     body: "The owls are not what they seem.",
     votes: 20,
     author: "icellusedkars",
