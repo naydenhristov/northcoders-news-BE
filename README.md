@@ -1,3 +1,8 @@
 # NC News Seeding
 
-- Instructions for this sprint can be found at https://l2c.northcoders.com/courses/be/seeding-nc-news
+Two .env files created for the databases:
+
+.env.test => PGDATABASE=nc_news_test.
+.env.development => PGDATABASE=nc_news.
+
+.gitignore file includes .env.* so these files aren't pushed to GitHub.

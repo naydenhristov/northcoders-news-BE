@@ -28,10 +28,10 @@
     "jest-extended": "^2.0.0"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.5.0",
     "pg": "^8.13.3"
   },
-   "jest": {
+  "jest": {
     "setupFilesAfterEnv": [
       "jest-extended/all"
     ]
