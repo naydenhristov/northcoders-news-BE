@@ -73,7 +73,8 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     })
     .then(() => {
       const formattedArticles = articleData.map((article) => {
-        const formattedDate = convertTimestampToDate(article.created_at);
+        const articleTimeStamp = article.created_at;
+        const formattedDate = convertTimestampToDate({ articleTimeStamp });
         console.log(formattedDate, "<---formattedDate");
         return [
           article.title,
@@ -82,7 +83,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
           article.body,
           formattedDate.created_at,
           article.votes,
-          article.article_img_url,
+          article.article_img_url
         ];
       });
       const insertArticlesQuery = format(
@@ -100,15 +101,16 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     FROM articles WHERE articles.title = '${comment.article_title}'`
               )
               .then((result) => {
-                const formattedDate = convertTimestampToDate(comment.created_at);
+                const commentTimeStamp = comment.created_at;
+                const formattedDate = convertTimestampToDate({ commentTimeStamp });
                 const article_id = result.rows[0].article_id;
                 console.log(article_id, "<---article_id");
                 const dataToReturn = [
-                  comment.article_id,
+                  article_id,
                   comment.body,
                   comment.votes,
                   comment.author,
-                  formattedDate.created_at,
+                  formattedDate.created_at
                 ];
                 console.log(dataToReturn, "<---dataToReturn - comments");
                 return dataToReturn;
