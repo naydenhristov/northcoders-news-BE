@@ -1,6 +1,6 @@
 const format = require("pg-format");
 const db = require("../connection");
-const { convertTimestampToDate, createRef } = require("./utils");
+const { convertTimestampToDate } = require("./utils");
 
 const seed = ({ topicData, userData, articleData, commentData }) => {
   return db //deleting tables in reverse order if they exist
@@ -73,47 +73,60 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     })
     .then(() => {
       const formattedArticles = articleData.map((article) => {
-        const legitimateArticle = convertTimestampToDate(article);
+        const formattedDate = convertTimestampToDate(article);
+        console.log(formattedDate, "<---formattedDate");
         return [
-          legitimateArticle.title,
-          legitimateArticle.topic,
-          legitimateArticle.author,
-          legitimateArticle.body,
-          legitimateArticle.created_at,
-          legitimateArticle.votes,
-          legitimateArticle.article_img_url
+          article.title,
+          article.topic,
+          article.author,
+          article.body,
+          formattedDate.created_at,
+          article.votes,
+          article.article_img_url
         ];
       });
       const insertArticlesQuery = format(
         `INSERT INTO articles(title, topic, author, body, created_at, 
-        votes, article_img_url) VALUES %L RETURNING *`,
+        votes, article_img_url) VALUES %L`,
         formattedArticles
       );
       return db.query(insertArticlesQuery);
     })
-    .then((articleTable) => {
-      const articlesReObject = createRef(articleTable.rows);
-      const formattedComments = commentData.map((comment) => {
-        const legitComment = convertTimestampToDate(comment);
-        return [
-          articlesReObject[comment.article_title],
-          legitComment.body,
-          legitComment.votes,
-          legitComment.author,
-          legitComment.created_at
-        ];
-      });
-      const insertCommentsQuery = format(
-        `INSERT INTO comments (article_id, body, votes, author, created_at)
-        VALUES %L`, formattedComments
-      )
-      return db.query(insertCommentsQuery);
+    .then(() => {
+      Promise.all(
+          commentData.map(async (comment) => {
+            console.log(`${comment.article_title}`, "<--comment.article_title");
+             return await db.query(`SELECT articles.article_id 
+    FROM articles WHERE articles.title = '${comment.article_title}'`
+              )
+              .then((result) => {
+                const formattedDate = convertTimestampToDate(comment);
+                const article_id = result.rows[0].article_id;
+                console.log(article_id, "<---article_id");
+                const dataToReturn = [
+                  article_id,
+                  comment.body,
+                  comment.votes,
+                  comment.author,
+                  formattedDate.created_at
+                ];
+                console.log(dataToReturn, "<---dataToReturn - comments");
+                return dataToReturn;
+              });
+          }))
+        .then((formattedComments) => {
+          console.log(formattedComments, "<---formattedComments");
+          const insertCommentsQuery = format(
+            `INSERT INTO comments(article_id, body, votes, 
+            author, created_at) VALUES %L`,
+            formattedComments
+          );
+          return db.query(insertCommentsQuery);
+        });
     })
     .then(() => {
       console.log("Seed completed");
     })
-    
-  
 };
 
 module.exports = seed;
