@@ -111,9 +111,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     })
     .then(() => {
       console.log("Seed completed");
-    })
-    
-  
+    });
 };
 
 module.exports = seed;

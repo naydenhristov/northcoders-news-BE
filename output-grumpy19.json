@@ -1,0 +1,223 @@
+{
+  "command": "SELECT",
+  "rowCount": 6,
+  "oid": null,
+  "rows": [
+    {
+      "article_id": 6,
+      "title": "JavaScript’s Apply, Call, and Bind Methods are Essential for JavaScript Professionals",
+      "topic": "coding",
+      "author": "grumpy19",
+      "body": "Functions are objects in JavaScript, as you should know by now, if you have read any of the prerequisite articles. And as objects, functions have methods, including the powerful Apply, Call, and Bind methods. On the one hand, Apply and Call are nearly identical and are frequently used in JavaScript for borrowing methods and for setting the this value explicitly. We also use Apply for variable-arity functions; you will learn more about this in a bit.",
+      "created_at": "2020-11-11T15:09:00.000Z",
+      "votes": 0,
+      "article_img_url": "https://images.pexels.com/photos/4383298/pexels-photo-4383298.jpeg?w=700&h=700"
+    },
+    {
+      "article_id": 9,
+      "title": "Learn HTML5, CSS3, and Responsive WebSite Design in One Go",
+      "topic": "coding",
+      "author": "grumpy19",
+      "body": "Both CSS3 and HTML5 are just about fully supported in all modern browsers, and we there are techniques in place to patch old browsers that lack support. So there is no disadvantage to using CSS3 and HTML5 today. The opposite is true, however: there are many painful, frustrating disadvantages with forgoing HTML5 and CSS3. You may already “know” a bit of HTML5 and a touch of CSS3 (or perhaps you probably know enough old-school HTML and CSS, and with this knowledge, you might have thought you needn’t learn HTML5 and CSS3 fully.",
+      "created_at": "2020-05-26T14:06:00.000Z",
+      "votes": 0,
+      "article_img_url": "https://images.pexels.com/photos/1591061/pexels-photo-1591061.jpeg?w=700&h=700"
+    },
+    {
+      "article_id": 18,
+      "title": "The People Tracking Every Touch, Pass And Tackle in the World Cup",
+      "topic": "football",
+      "author": "grumpy19",
+      "body": "With each click and drag of a mouse, young soccer fanatics are creating the building blocks of the advanced stats that are changing how the sport is played, watched and analyzed. Opta and Prozone are among the companies that have taken soccer stats far beyond goals and saves, into the realm of pass completion percentage, defensive touches, percentage of aerial balls won, tackle percentage and goals scored above expectation. Cameras alone can’t process all these stats. So companies employ people — mostly young, mostly male, most logging matches in their spare time as a second job — to watch matches and document every event. Their work has helped develop stats that capture the value of players who don’t score many goals, but who set them up with pinpoint passing and hustle. Teams use advanced stats to decide which players to buy and put on the pitch. And fans, whether they like it or not, read and hear more numbers than ever before about this sport that for so long bucked the sports-analytics trend.",
+      "created_at": "2020-08-17T14:03:00.000Z",
+      "votes": 0,
+      "article_img_url": "https://images.pexels.com/photos/1884576/pexels-photo-1884576.jpeg?w=700&h=700"
+    },
+    {
+      "article_id": 27,
+      "title": "Thanksgiving Drinks for Everyone",
+      "topic": "cooking",
+      "author": "grumpy19",
+      "body": "Thanksgiving is a foodie’s favorite holiday. Mashed potatoes, cranberry sauce, stuffing, and last but not least, a juicy turkey. Don’t let your meticulous menu fall short of perfection; flavorful cocktails are just as important as the meal. Here are a few ideas that will fit right into your festivities.",
+      "created_at": "2020-01-24T23:22:00.000Z",
+      "votes": 0,
+      "article_img_url": "https://images.pexels.com/photos/1565982/pexels-photo-1565982.jpeg?w=700&h=700"
+    },
+    {
+      "article_id": 32,
+      "title": "Halal food: Keeping pure and true",
+      "topic": "cooking",
+      "author": "grumpy19",
+      "body": "CHINA’S cities abound with restaurants and food stalls catering to Muslims as well as to the many other Chinese who relish the distinctive cuisines for which the country’s Muslims are renowned. So popular are kebabs cooked by Muslim Uighurs on the streets of Beijing that the city banned outdoor grills in 2014 in order to reduce smoke, which officials said was exacerbating the capital’s notorious smog (the air today is hardly less noxious). Often such food is claimed to be qing zhen, meaning 'pure and true', or halal, prepared according to traditional Islamic regulations. But who can tell? Last year angry Muslims besieged a halal bakery in Xining, the capital of Qinghai province, after pork sausages were found in the shop’s delivery van. There have been several scandals in recent years involving rat meat or pork being sold as lamb. These have spread Muslim mistrust of domestically produced halal products.",
+      "created_at": "2020-06-18T20:08:00.000Z",
+      "votes": 0,
+      "article_img_url": "https://images.pexels.com/photos/954677/pexels-photo-954677.jpeg?w=700&h=700"
+    },
+    {
+      "article_id": 34,
+      "title": "The Notorious MSG’s Unlikely Formula For Success",
+      "topic": "cooking",
+      "author": "grumpy19",
+      "body": "The 'umami' craze has turned a much-maligned and misunderstood food additive into an object of obsession for the world’s most innovative chefs. But secret ingredient monosodium glutamate’s biggest secret may be that there was never anything wrong with it at all.",
+      "created_at": "2020-11-22T11:13:00.000Z",
+      "votes": 0,
+      "article_img_url": "https://images.pexels.com/photos/2403392/pexels-photo-2403392.jpeg?w=700&h=700"
+    }
+  ],
+  "fields": [
+    {
+      "name": "article_id",
+      "tableID": 33944,
+      "columnID": 1,
+      "dataTypeID": 23,
+      "dataTypeSize": 4,
+      "dataTypeModifier": -1,
+      "format": "text"
+    },
+    {
+      "name": "title",
+      "tableID": 33944,
+      "columnID": 2,
+      "dataTypeID": 1043,
+      "dataTypeSize": -1,
+      "dataTypeModifier": 504,
+      "format": "text"
+    },
+    {
+      "name": "topic",
+      "tableID": 33944,
+      "columnID": 3,
+      "dataTypeID": 1043,
+      "dataTypeSize": -1,
+      "dataTypeModifier": 504,
+      "format": "text"
+    },
+    {
+      "name": "author",
+      "tableID": 33944,
+      "columnID": 4,
+      "dataTypeID": 1043,
+      "dataTypeSize": -1,
+      "dataTypeModifier": 504,
+      "format": "text"
+    },
+    {
+      "name": "body",
+      "tableID": 33944,
+      "columnID": 5,
+      "dataTypeID": 25,
+      "dataTypeSize": -1,
+      "dataTypeModifier": -1,
+      "format": "text"
+    },
+    {
+      "name": "created_at",
+      "tableID": 33944,
+      "columnID": 6,
+      "dataTypeID": 1114,
+      "dataTypeSize": 8,
+      "dataTypeModifier": -1,
+      "format": "text"
+    },
+    {
+      "name": "votes",
+      "tableID": 33944,
+      "columnID": 7,
+      "dataTypeID": 23,
+      "dataTypeSize": 4,
+      "dataTypeModifier": -1,
+      "format": "text"
+    },
+    {
+      "name": "article_img_url",
+      "tableID": 33944,
+      "columnID": 8,
+      "dataTypeID": 1043,
+      "dataTypeSize": -1,
+      "dataTypeModifier": 1004,
+      "format": "text"
+    }
+  ],
+  "_parsers": [null, null, null, null, null, null, null, null],
+  "_types": {
+    "_types": {
+      "arrayParser": {},
+      "builtins": {
+        "BOOL": 16,
+        "BYTEA": 17,
+        "CHAR": 18,
+        "INT8": 20,
+        "INT2": 21,
+        "INT4": 23,
+        "REGPROC": 24,
+        "TEXT": 25,
+        "OID": 26,
+        "TID": 27,
+        "XID": 28,
+        "CID": 29,
+        "JSON": 114,
+        "XML": 142,
+        "PG_NODE_TREE": 194,
+        "SMGR": 210,
+        "PATH": 602,
+        "POLYGON": 604,
+        "CIDR": 650,
+        "FLOAT4": 700,
+        "FLOAT8": 701,
+        "ABSTIME": 702,
+        "RELTIME": 703,
+        "TINTERVAL": 704,
+        "CIRCLE": 718,
+        "MACADDR8": 774,
+        "MONEY": 790,
+        "MACADDR": 829,
+        "INET": 869,
+        "ACLITEM": 1033,
+        "BPCHAR": 1042,
+        "VARCHAR": 1043,
+        "DATE": 1082,
+        "TIME": 1083,
+        "TIMESTAMP": 1114,
+        "TIMESTAMPTZ": 1184,
+        "INTERVAL": 1186,
+        "TIMETZ": 1266,
+        "BIT": 1560,
+        "VARBIT": 1562,
+        "NUMERIC": 1700,
+        "REFCURSOR": 1790,
+        "REGPROCEDURE": 2202,
+        "REGOPER": 2203,
+        "REGOPERATOR": 2204,
+        "REGCLASS": 2205,
+        "REGTYPE": 2206,
+        "UUID": 2950,
+        "TXID_SNAPSHOT": 2970,
+        "PG_LSN": 3220,
+        "PG_NDISTINCT": 3361,
+        "PG_DEPENDENCIES": 3402,
+        "TSVECTOR": 3614,
+        "TSQUERY": 3615,
+        "GTSVECTOR": 3642,
+        "REGCONFIG": 3734,
+        "REGDICTIONARY": 3769,
+        "JSONB": 3802,
+        "REGNAMESPACE": 4089,
+        "REGROLE": 4096
+      }
+    },
+    "text": {},
+    "binary": {}
+  },
+  "RowCtor": null,
+  "rowAsArray": false,
+  "_prebuiltEmptyResultObject": {
+    "article_id": null,
+    "title": null,
+    "topic": null,
+    "author": null,
+    "body": null,
+    "created_at": null,
+    "votes": null,
+    "article_img_url": null
+  }
+}
