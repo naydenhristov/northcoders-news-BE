@@ -92,11 +92,13 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       return db.query(insertArticlesQuery);
     })
     .then((articleTable) => {
+      
       const articlesReObject = createRef(articleTable.rows);
+      
       const formattedComments = commentData.map((comment) => {
         const legitComment = convertTimestampToDate(comment);
         return [
-          articlesReObject[comment.article_title],
+          articlesReObject[legitComment.article_title],
           legitComment.body,
           legitComment.votes,
           legitComment.author,
