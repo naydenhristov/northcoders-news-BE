@@ -32,8 +32,6 @@ describe("GET /api/topics", () => {
       .expect(200)
       .then((response) => {
         const topics = response.body.topics;
-        console.log(topics, "<---topics, test");
-
         expect(topics).toHaveLength(3);
         expect(typeof topics).toBe("object");
         topics.forEach((topic) => {
@@ -45,12 +43,13 @@ describe("GET /api/topics", () => {
         });
       });
   });
+});
 
+describe("GET /wrongpath", () => {
   test("404: not found, spelling mistake in the path / wrong path", () => {
     return request(app).get("/wrongpath").expect(404)
-    .then((errmsg) => {
-      console.log(errmsg.body, "<--errmsg");
-      expect(errmsg.body.msg).toBe("Not Found");
+    .then((response) => {
+      expect(response.body.msg).toBe("Not Found");
     }); 
   });
 });
