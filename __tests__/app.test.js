@@ -49,9 +49,8 @@ describe("GET /api/topics", () => {
   test("404: not found, spelling mistake in the path / wrong path", () => {
     return request(app).get("/wrongpath").expect(404)
     .then((errmsg) => {
-      console.log(errmsg.res.statusMessage, "<--errmsg");
-      expect(errmsg.res.statusMessage).toBe("Not Found");
+      console.log(errmsg.body, "<--errmsg");
+      expect(errmsg.body.msg).toBe("Not Found");
     }); 
-    //probably we don't need .then clause, just expect(404) is enough in this case
   });
 });
