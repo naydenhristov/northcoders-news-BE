@@ -1,12 +1,15 @@
 const express = require("express");
 const app = express();
 const {
-    getApi
+    getApi, 
+    getTopics
 } = require("./app/nc_news.controller")
 
-app.use(express.json());
+//app.use(express.json());
 
 app.get("/api", getApi);
+
+app.get("/api/topics", getTopics);
 
 app.all("/splat", (req, res) => {
     res.status(404).send({msg: "Not Found"});
