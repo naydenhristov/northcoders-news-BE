@@ -11,7 +11,7 @@ app.get("/api", getApi);
 
 app.get("/api/topics", getTopics);
 
-app.all("/splat", (req, res) => {
+app.all("/*splat", (req, res) => {
     res.status(404).send({msg: "Not Found"});
 });
 module.exports = app;
