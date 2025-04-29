@@ -30,8 +30,8 @@ describe("GET /api/topics", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
-      .then((response) => {
-        const topics = response.body.topics;
+      .then(({body}) => {
+        const topics = body.topics;
         expect(topics).toHaveLength(3);
         expect(typeof topics).toBe("object");
         topics.forEach((topic) => {
@@ -48,8 +48,47 @@ describe("GET /api/topics", () => {
 describe("GET /wrongpath", () => {
   test("404: not found, spelling mistake in the path / wrong path", () => {
     return request(app).get("/wrongpath").expect(404)
-    .then((response) => {
-      expect(response.body.msg).toBe("Not Found");
+    .then(({body}) => {
+      expect(body.msg).toBe("Not Found");
     }); 
+  });
+});
+
+describe("GET /api/articles/:article_id", () => {
+  test("200: sends response with correct article_id", () => {
+    return request(app)
+      .get("/api/articles/1")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.article).toEqual({
+          article_id: 1,
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: "2020-07-09T20:11:00.000Z",
+          votes: 100,
+          article_img_url:
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+        });
+      });
+  });
+
+  test("400: Bad Request! when a string passed instead of valid article_id", () => {
+    return request(app)
+      .get("/api/articles/NotAnId")
+      .expect(400)
+      .then(({body}) => {
+        expect(body.msg).toBe("Bad Request!");
+      })
+  });
+
+  test("404: Not Found! when passed a valid number, but not existing article_id", () => {
+    return request(app)
+      .get("/api/articles/1000")
+      .expect(404)
+      .then(({body}) => {
+        expect(body.msg).toBe("Not Found!");
+      })
   });
 });
