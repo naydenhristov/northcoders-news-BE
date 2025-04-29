@@ -1,6 +1,7 @@
 const endpoints = require("../endpoints.json");
 const { 
-    selectTopics
+    selectTopics,
+    selectArticleById
  } = require("./nc_news.model");
 
 
@@ -13,8 +14,15 @@ exports.getTopics = (req, res, next) => {
     .then((topics) => {
       res.status(200).send({ topics });
     })
-    .catch((err) => {
-     console.log(err.code, "<-----controller error, getTreasures");
-      next(err);
+    .catch(next);
+}
+
+exports.getArticleById = (req, res, next) => {
+    const {article_id} = req.params;
+    
+    selectArticleById(article_id)
+    .then((article) => {
+      res.status(200).send({ article });
     })
+    .catch(next);
 }
