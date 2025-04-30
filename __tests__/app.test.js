@@ -14,6 +14,16 @@ afterAll(() => {
   return db.end();
 });
 
+describe("GET /wrongpath", () => {
+  test("404: not found, spelling mistake in the path / wrong path", () => {
+    return request(app).get("/wrongpath").expect(404)
+    .then(({body}) => {
+      expect(body.msg).toBe("Not Found");
+    }); 
+  });
+});
+
+//1 - CORE: GET /api
 describe("GET /api", () => {
   test("200: Responds with an object detailing the documentation for each endpoint", () => {
     return request(app)
@@ -25,6 +35,7 @@ describe("GET /api", () => {
   });
 });
 
+//2 - CORE: GET /api/topics
 describe("GET /api/topics", () => {
   test("200: Responds with an object containing all topics with correct formatted data within", () => {
     return request(app)
@@ -38,22 +49,14 @@ describe("GET /api/topics", () => {
           expect(topic).toEqual({
             description: expect.any(String),
             slug: expect.any(String),
-            img_url: expect.any(String),
+            img_url: expect.any(String)
           });
         });
       });
   });
 });
 
-describe("GET /wrongpath", () => {
-  test("404: not found, spelling mistake in the path / wrong path", () => {
-    return request(app).get("/wrongpath").expect(404)
-    .then(({body}) => {
-      expect(body.msg).toBe("Not Found");
-    }); 
-  });
-});
-
+//3 - CORE: GET /api/articles/:article_id
 describe("GET /api/articles/:article_id", () => {
   test("200: sends response with correct article_id", () => {
     return request(app)
@@ -69,7 +72,7 @@ describe("GET /api/articles/:article_id", () => {
           created_at: "2020-07-09T20:11:00.000Z",
           votes: 100,
           article_img_url:
-            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
         });
       });
   });
@@ -90,5 +93,33 @@ describe("GET /api/articles/:article_id", () => {
       .then(({body}) => {
         expect(body.msg).toBe("Not Found!");
       })
+  });
+});
+
+//4 - CORE: GET /api/articles
+describe("GET /api/articles", () => {
+  test("200: Responds with an object containing all articles sorted in descending order, without body property, but having comment_count property, which is the total count of all the comments with this article_id", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({body}) => {
+        const articles = body.articles;
+        console.log(articles, "<--- articles");
+        expect(articles).toHaveLength(13);
+        expect(typeof articles).toBe("object");
+        articles.forEach((article) => {
+          expect(article).toEqual({
+          article_id: expect.any(Number),
+          title: expect.any(String),
+          topic: expect.any(String),
+          author: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          article_img_url:
+          expect.any(String),
+          comment_count: expect.any(Number)
+          });
+        });
+      });
   });
 });
