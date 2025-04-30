@@ -1,7 +1,8 @@
 const endpoints = require("../endpoints.json");
 const { 
     selectTopics,
-    selectArticleById
+    selectArticleById,
+    selectArticlesSorted
  } = require("./nc_news.model");
 
 
@@ -25,4 +26,12 @@ exports.getArticleById = (req, res, next) => {
       res.status(200).send({ article });
     })
     .catch(next);
+}
+
+exports.getArticlesSorted = (req, res, next) => {
+  return selectArticlesSorted()
+  .then((articles) => {
+    res.status(200).send({ articles });
+  })
+  .catch(next);
 }
