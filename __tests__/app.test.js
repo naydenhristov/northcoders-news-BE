@@ -86,12 +86,12 @@ describe("GET /api/articles/:article_id", () => {
       })
   });
 
-  test("404: Not Found! when passed a valid number, but not existing article_id", () => {
+  test("404: ID Not Found! when passed a valid number, but not existing article_id", () => {
     return request(app)
       .get("/api/articles/1000")
       .expect(404)
       .then(({body}) => {
-        expect(body.msg).toBe("Not Found!");
+        expect(body.msg).toBe("ID Not Found!");
       })
   });
 });
@@ -104,7 +104,6 @@ describe("GET /api/articles", () => {
       .expect(200)
       .then(({body}) => {
         const articles = body.articles;
-        console.log(articles, "<--- articles");
         expect(articles).toHaveLength(13);
         expect(typeof articles).toBe("object");
         articles.forEach((article) => {
@@ -122,4 +121,95 @@ describe("GET /api/articles", () => {
         });
       });
   });
+});
+
+//5 - CORE: GET /api/articles/:article_id/comments
+describe("GET /api/articles/:article_id/comments", () => {
+  test("200: sends response with an array of comments for the given article_id = 3", () => {
+    return request(app)
+      .get("/api/articles/3/comments")
+      .expect(200)
+      .then(({ body }) => {
+        const comments = body.comments;
+        expect(comments).toHaveLength(2);
+        expect(typeof comments).toBe("object");
+        expect(comments).toEqual([
+          {
+            comment_id: 11,
+            article_id: 3,
+            body: 'Ambidextrous marsupial',
+            votes: 0,
+            author: 'icellusedkars',
+            created_at: '2020-09-19T23:10:00.000Z'
+          },
+          {
+            comment_id: 10,
+            article_id: 3,
+            body: 'git push origin master',
+            votes: 0,
+            author: 'icellusedkars',
+            created_at: '2020-06-20T07:24:00.000Z'
+          }
+        ]);
+        comments.forEach((comment) => {
+          expect(comment).toEqual({
+          comment_id: expect.any(Number),
+          article_id: expect.any(Number),
+          author: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          body: expect.any(String)
+          });
+        });
+      });
+  });
+
+  test("200: sends response with an array of comments for the given article_id = 1", () => {
+    return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      .then(({ body }) => {
+        const comments = body.comments;
+        expect(comments).toHaveLength(11);
+        expect(typeof comments).toBe("object");
+        comments.forEach((comment) => {
+          expect(comment).toEqual({
+          comment_id: expect.any(Number),
+          article_id: expect.any(Number),
+          author: expect.any(String),
+          created_at: expect.any(String),
+          votes: expect.any(Number),
+          body: expect.any(String)
+          });
+        });
+      });
+  });
+
+  test("200: responds with empty array when passed a valid article_id, but no comments for the given article_id", () => {
+    return request(app)
+      .get("/api/articles/2/comments")
+      .expect(200)
+      .then(({body: {comments}}) => {
+        expect(comments).toEqual([]);
+      })
+  });
+
+  test("400: Bad Request! when a string passed instead of valid article_id", () => {
+    return request(app)
+      .get("/api/articles/NotAnId/comments")
+      .expect(400)
+      .then(({body}) => {
+        expect(body.msg).toBe("Bad Request!");
+      })
+  });
+
+  test("404: ID Not Found! when passed a valid number, but not existing article_id", () => {
+    return request(app)
+      .get("/api/articles/1000/comments")
+      .expect(404)
+      .then(({body}) => {
+        expect(body.msg).toBe("ID Not Found!");
+      })
+  });
+
 });

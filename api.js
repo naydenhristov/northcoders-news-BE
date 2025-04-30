@@ -4,7 +4,8 @@ const {
   getApi,
   getTopics,
   getArticleById,
-  getArticlesSorted
+  getArticlesSorted,
+  getCommentsByArticleId
 } = require("./app/nc_news.controller");
 const { handlePSQLErrors, handleCustomErrors, handleServerErrors } =
   require("./errors/errors");
@@ -18,6 +19,8 @@ app.get("/api/topics", getTopics);
 app.get("/api/articles/:article_id", getArticleById);
 
 app.get("/api/articles", getArticlesSorted);
+
+app.get("/api/articles/:article_id/comments", getCommentsByArticleId);
 
 //Single error handled by express (bad urls) below
 app.all("/*splat", (req, res) => {

@@ -2,7 +2,8 @@ const endpoints = require("../endpoints.json");
 const { 
     selectTopics,
     selectArticleById,
-    selectArticlesSorted
+    selectArticlesSorted,
+    selectCommentsByArticleId
  } = require("./nc_news.model");
 
 
@@ -11,7 +12,7 @@ exports.getApi = (req, res) => {
 }
 
 exports.getTopics = (req, res, next) => {
-    return selectTopics()
+    selectTopics()
     .then((topics) => {
       res.status(200).send({ topics });
     })
@@ -29,9 +30,22 @@ exports.getArticleById = (req, res, next) => {
 }
 
 exports.getArticlesSorted = (req, res, next) => {
-  return selectArticlesSorted()
+  selectArticlesSorted()
   .then((articles) => {
     res.status(200).send({ articles });
+  })
+  .catch(next);
+}
+
+exports.getCommentsByArticleId = (req, res, next) => {
+  const {article_id} = req.params;
+
+  const pendingArticleById = selectArticleById(article_id);
+  const pendingCommentsByArticleId = selectCommentsByArticleId(article_id);
+
+  Promise.all([pendingCommentsByArticleId, pendingArticleById])
+  .then(([comments]) => {
+    res.status(200).send({ comments });
   })
   .catch(next);
 }
