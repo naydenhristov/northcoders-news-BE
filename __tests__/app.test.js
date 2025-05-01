@@ -214,8 +214,7 @@ describe("POST /api/articles/:article_id/comments", () => {
         body: "New Comment Body"
       })
       .expect(201)
-      .then(({ body }) => {
-        const comment = body.comment;
+      .then(({ body: { comment } }) => {
         expect(comment).toHaveLength(1);
         expect(typeof comment).toBe("object");
         expect(comment).toEqual([
@@ -294,5 +293,47 @@ describe("POST /api/articles/:article_id/comments", () => {
         expect(body.msg).toBe("Bad Request! No comment body provided!");
       })
   });
+});
 
+//7 - CORE: PATCH /api/articles/:article_id
+describe("PATCH /api/articles/:article_id/", () => {
+  test("200: responds with updated article (POSITIVE value of votes property if POSITIVE result after adding new votes)", () => {
+    return request(app)
+      .patch("/api/articles/3")
+      .send({inc_votes: 1})
+      .expect(200)
+      .then(({ body: { article  }}) => {
+        expect(article).toEqual({
+          article_id: 3,
+          title: "Eight pug gifs that remind me of mitch",
+          topic: "mitch",
+          author: "icellusedkars",
+          body: "some gifs",
+          created_at: "2020-11-03T09:12:00.000Z",
+          votes: 1,
+          article_img_url:
+          "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+      });
+      });
+  });
+
+  test("200: responds with updated article (votes property value equal to 0 if NEGATIVE result after adding new votes)", () => {
+    return request(app)
+      .patch("/api/articles/3")
+      .send({inc_votes: -100})
+      .expect(200)
+      .then(({ body: { article  }}) => {
+        expect(article).toEqual({
+          article_id: 3,
+          title: "Eight pug gifs that remind me of mitch",
+          topic: "mitch",
+          author: "icellusedkars",
+          body: "some gifs",
+          created_at: "2020-11-03T09:12:00.000Z",
+          votes: 0,
+          article_img_url:
+          "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+      });
+      });
+  });
 });

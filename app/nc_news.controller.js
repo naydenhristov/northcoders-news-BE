@@ -6,6 +6,7 @@ const {
   selectCommentsByArticleId,
   insertCommenttByArticleId,
   validUsername,
+  updateArticleByID
 } = require("./nc_news.model");
 
 exports.getApi = (req, res) => {
@@ -72,3 +73,13 @@ exports.postCommentsByArticleId = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.patchArticleById = (req, res) => {
+  const {article_id} = req.params;
+  const patchBody = req.body;
+
+  updateArticleByID(article_id, patchBody).then((article) => {
+    res.status(200).send({article});
+    
+  })
+}
