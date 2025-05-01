@@ -216,7 +216,6 @@ describe("POST /api/articles/:article_id/comments", () => {
       .expect(201)
       .then(({ body }) => {
         const comment = body.comment;
-        console.log(comment, "<---comment, test");
         expect(comment).toHaveLength(1);
         expect(typeof comment).toBe("object");
         expect(comment).toEqual([
@@ -256,6 +255,43 @@ describe("POST /api/articles/:article_id/comments", () => {
       .expect(404)
       .then(({body}) => {
         expect(body.msg).toBe("ID Not Found!");
+      })
+  });
+
+  test("404: User Not Found! when passed a non existing username", () => {
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send({
+        username: "blabla",
+        body: "Another New Comment Body"
+      })
+      .expect(404)
+      .then(({body}) => {
+        expect(body.msg).toBe("User Not Found in users table!");
+      })
+  });
+
+  test("400: Bad Request! No username provided! when passed a request with missing username", () => {
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send({
+        body: "Another New Comment Body"
+      })
+      .expect(400)
+      .then(({body}) => {
+        expect(body.msg).toBe("Bad Request! No username provided!");
+      })
+  });
+
+  test("400: Bad Request! No comment body provided! when passed a request with missing username", () => {
+    return request(app)
+      .post("/api/articles/2/comments")
+      .send({
+        username: "icellusedkars"
+      })
+      .expect(400)
+      .then(({body}) => {
+        expect(body.msg).toBe("Bad Request! No comment body provided!");
       })
   });
 
