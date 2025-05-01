@@ -35,9 +35,19 @@ exports.selectCommentsByArticleId = (article_id) => {
 };
 
 exports.insertCommenttByArticleId = (article_id, newComment) => {
+
   return db.query(`INSERT INTO comments (article_id, body, votes, author, created_at) 
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *;`, [article_id, newComment.body, 0, newComment.username, new Date()]).then((result) => {
       return result.rows;
     });
 };
+
+exports.validUsername = (username) => {
+  return db.query("SELECT username FROM users WHERE username = $1", [username]).then((result) => {
+    if(!result.rows.length) {
+      return Promise.reject({ status: 404, msg: "User Not Found in users table!"})
+  }
+    return result.rows[0];
+  });
+}
