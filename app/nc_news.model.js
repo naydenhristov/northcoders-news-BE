@@ -29,7 +29,15 @@ exports.selectArticlesSorted = () => {
 };
 
 exports.selectCommentsByArticleId = (article_id) => {
-  return db.query(`SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC`, [article_id]).then((result) => {
+  return db.query(`SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC;`, [article_id]).then((result) => {
+      return result.rows;
+    });
+};
+
+exports.insertCommenttByArticleId = (article_id, newComment) => {
+  return db.query(`INSERT INTO comments (article_id, body, votes, author, created_at) 
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;`, [article_id, newComment.body, 0, newComment.username, new Date()]).then((result) => {
       return result.rows;
     });
 };

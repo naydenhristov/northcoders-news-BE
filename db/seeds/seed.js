@@ -17,7 +17,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     .then(() => {
       //creating tables
       return db.query(`CREATE TABLE topics(
-      slug VARCHAR(100) PRIMARY KEY,
+      slug VARCHAR(500) PRIMARY KEY NOT NULL UNIQUE,
       description VARCHAR(1500),
       img_url VARCHAR(1000)
       );`);
@@ -93,12 +93,12 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     })
     .then((articleTable) => {
       
-      const articlesReObject = createRef(articleTable.rows);
+      const articlesRefObject = createRef(articleTable.rows);
       
       const formattedComments = commentData.map((comment) => {
         const legitComment = convertTimestampToDate(comment);
         return [
-          articlesReObject[legitComment.article_title],
+          articlesRefObject[legitComment.article_title],
           legitComment.body,
           legitComment.votes,
           legitComment.author,

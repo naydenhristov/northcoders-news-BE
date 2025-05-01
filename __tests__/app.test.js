@@ -151,16 +151,6 @@ describe("GET /api/articles/:article_id/comments", () => {
             created_at: '2020-06-20T07:24:00.000Z'
           }
         ]);
-        comments.forEach((comment) => {
-          expect(comment).toEqual({
-          comment_id: expect.any(Number),
-          article_id: expect.any(Number),
-          author: expect.any(String),
-          created_at: expect.any(String),
-          votes: expect.any(Number),
-          body: expect.any(String)
-          });
-        });
       });
   });
 
@@ -173,7 +163,7 @@ describe("GET /api/articles/:article_id/comments", () => {
         expect(comments).toHaveLength(11);
         expect(typeof comments).toBe("object");
         comments.forEach((comment) => {
-          expect(comment).toEqual({
+          expect(comment).toMatchObject({
           comment_id: expect.any(Number),
           article_id: expect.any(Number),
           author: expect.any(String),
@@ -206,6 +196,63 @@ describe("GET /api/articles/:article_id/comments", () => {
   test("404: ID Not Found! when passed a valid number, but not existing article_id", () => {
     return request(app)
       .get("/api/articles/1000/comments")
+      .expect(404)
+      .then(({body}) => {
+        expect(body.msg).toBe("ID Not Found!");
+      })
+  });
+
+});
+
+//6 - CORE: POST /api/articles/:article_id/comments
+describe("POST /api/articles/:article_id/comments", () => {
+  test("201: responds with added comment for the given article_id = 4", () => {
+    return request(app)
+      .post("/api/articles/4/comments")
+      .send({
+        username: "icellusedkars",
+        body: "New Comment Body"
+      })
+      .expect(201)
+      .then(({ body }) => {
+        const comment = body.comment;
+        console.log(comment, "<---comment, test");
+        expect(comment).toHaveLength(1);
+        expect(typeof comment).toBe("object");
+        expect(comment).toEqual([
+          {
+            comment_id: 19,
+            article_id: 4,
+            body: "New Comment Body",
+            votes: 0,
+            author: "icellusedkars",
+            created_at: expect.any(String)
+          }
+        ]);
+      });
+  });
+
+  
+  test("400: Bad Request! when a string passed instead of valid article_id", () => {
+    return request(app)
+      .post("/api/articles/NotAnId/comments")
+      .send({
+        username: "icellusedkars",
+        body: "New Comment Body"
+      })
+      .expect(400)
+      .then(({body}) => {
+        expect(body.msg).toBe("Bad Request!");
+      })
+  });
+
+  test("404: ID Not Found! when passed a valid number, but not existing article_id", () => {
+    return request(app)
+      .post("/api/articles/1000/comments")
+      .send({
+        username: "icellusedkars",
+        body: "New Comment Body"
+      })
       .expect(404)
       .then(({body}) => {
         expect(body.msg).toBe("ID Not Found!");

@@ -3,7 +3,8 @@ const {
     selectTopics,
     selectArticleById,
     selectArticlesSorted,
-    selectCommentsByArticleId
+    selectCommentsByArticleId, 
+    insertCommenttByArticleId
  } = require("./nc_news.model");
 
 
@@ -46,6 +47,16 @@ exports.getCommentsByArticleId = (req, res, next) => {
   Promise.all([pendingCommentsByArticleId, pendingArticleById])
   .then(([comments]) => {
     res.status(200).send({ comments });
+  })
+  .catch(next);
+}
+
+exports.postCommentsByArticleId = (req, res, next) => {
+  const {article_id} = req.params; 
+  const newComment = req.body;
+  insertCommenttByArticleId(article_id, newComment)
+  .then((comment) => {
+    res.status(201).send({ comment });
   })
   .catch(next);
 }
