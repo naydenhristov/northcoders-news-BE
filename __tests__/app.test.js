@@ -358,7 +358,7 @@ describe("PATCH /api/articles/:article_id", () => {
 
   test("400: Bad Request - Invalid Amount of Votes! when a string passed instead of valid article_id", () => {
     return request(app)
-      .patch("/api/articles/NotAnId")
+      .patch("/api/articles/4")
       .send({ inc_votes: "aaa" })
       .expect(400)
       .then(({ body }) => {
