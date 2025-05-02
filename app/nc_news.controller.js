@@ -84,15 +84,14 @@ exports.patchArticleById = (req, res, next) => {
   const { article_id } = req.params;
   const patchBody = req.body;
   
-  if (isNaN(Number(patchBody.inc_votes))) {    
-    return res
-      .status(400)
-      .send({ msg: "Bad Request - Invalid Amount of Votes!" });
-  }
-  
   const validArticle = validArticleById(article_id);
 
   Promise.all([validArticle]).then(() => {
+    if (isNaN(Number(patchBody.inc_votes))) {    
+      return res
+        .status(400)
+        .send({ msg: "Bad Request - Invalid Amount of Votes!" });
+    }
     updateArticleByID(article_id, patchBody)
       .then((article) => {
         res.status(200).send({ article });
