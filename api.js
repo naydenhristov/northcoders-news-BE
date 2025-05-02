@@ -8,7 +8,8 @@ const {
   getCommentsByArticleId,
   postCommentsByArticleId,
   patchArticleById,
-  deleteCommentById
+  deleteCommentById,
+  getUsers
 } = require("./app/nc_news.controller");
 const { handlePSQLErrors, handleCustomErrors, handleServerErrors } =
   require("./errors/errors");
@@ -30,6 +31,8 @@ app.post("/api/articles/:article_id/comments", postCommentsByArticleId);
 app.patch("/api/articles/:article_id", patchArticleById);
 
 app.delete("/api/comments/:comment_id", deleteCommentById);
+
+app.get("/api/users", getUsers)
 
 //Single error handled by express (bad urls) below
 app.all("/*splat", (req, res) => {
