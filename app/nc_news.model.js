@@ -128,3 +128,9 @@ exports.validCommentById = (comment_id) => {
       //return result.rows[0]; -> if needed at a later stage
     });
 };
+
+exports.selectUsers = () => {
+  return db.query("SELECT * FROM users").then((result) => {
+    return result.rows;
+  });
+};

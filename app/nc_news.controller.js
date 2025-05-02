@@ -9,6 +9,7 @@ const {
   updateArticleByID,
   removeCommentByID,
   validCommentById,
+  selectUsers
 } = require("./nc_news.model");
 
 exports.getApi = (req, res) => {
@@ -96,6 +97,14 @@ exports.deleteCommentById = (req, res, next) => {
           res.status(204).send();
         })
         .catch(next);
+    })
+    .catch(next);
+};
+
+exports.getUsers = (req, res, next) => {
+  selectUsers()
+    .then((users) => {
+      res.status(200).send({ users });
     })
     .catch(next);
 };
