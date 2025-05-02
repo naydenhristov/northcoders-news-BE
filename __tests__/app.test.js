@@ -335,6 +335,37 @@ describe("PATCH /api/articles/:article_id", () => {
         });
       });
   });
+
+  test("400: Bad Request! when a string passed instead of valid article_id", () => {
+    return request(app)
+      .patch("/api/articles/NotAnId")
+      .send({ inc_votes: 1 })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request!");
+      });
+  });
+
+  test("404: Invalid ID - Article Not Found in articles table! when passed a valid number, but not existing article_id", () => {
+    return request(app)
+      .patch("/api/articles/1000")
+      .send({ inc_votes: 1 })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid ID - Article Not Found in articles table!");
+      });
+  });
+
+  test("400: Bad Request - Invalid Amount of Votes! when a string passed instead of valid article_id", () => {
+    return request(app)
+      .patch("/api/articles/NotAnId")
+      .send({ inc_votes: "aaa" })
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request - Invalid Amount of Votes!");
+      });
+  });
+
 });
 
 //8 - CORE: DELETE /api/comments/:comment_id
@@ -357,12 +388,12 @@ describe(" DELETE /api/comments/:comment_id", () => {
       });
   });
 
-  test("404: Comment Not Found! when passed a valid number, but not existing comment_id", () => {
+  test("404: Invalid ID - Comment Not Found! when passed a valid number, but not existing comment_id", () => {
     return request(app)
       .delete("/api/comments/1000")
       .expect(404)
       .then(({ body }) => {
-        expect(body.msg).toBe("Comment Not Found in comments table!");
+        expect(body.msg).toBe("Invalid ID - Comment Not Found in comments table!");
       });
   });
 });
