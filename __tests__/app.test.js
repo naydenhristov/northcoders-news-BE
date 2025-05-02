@@ -16,10 +16,12 @@ afterAll(() => {
 
 describe("GET /wrongpath", () => {
   test("404: not found, spelling mistake in the path / wrong path", () => {
-    return request(app).get("/wrongpath").expect(404)
-    .then(({body}) => {
-      expect(body.msg).toBe("Not Found");
-    }); 
+    return request(app)
+      .get("/wrongpath")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not Found");
+      });
   });
 });
 
@@ -41,7 +43,7 @@ describe("GET /api/topics", () => {
     return request(app)
       .get("/api/topics")
       .expect(200)
-      .then(({body}) => {
+      .then(({ body }) => {
         const topics = body.topics;
         expect(topics).toHaveLength(3);
         expect(typeof topics).toBe("object");
@@ -49,7 +51,7 @@ describe("GET /api/topics", () => {
           expect(topic).toEqual({
             description: expect.any(String),
             slug: expect.any(String),
-            img_url: expect.any(String)
+            img_url: expect.any(String),
           });
         });
       });
@@ -72,7 +74,7 @@ describe("GET /api/articles/:article_id", () => {
           created_at: "2020-07-09T20:11:00.000Z",
           votes: 100,
           article_img_url:
-            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
         });
       });
   });
@@ -81,18 +83,18 @@ describe("GET /api/articles/:article_id", () => {
     return request(app)
       .get("/api/articles/NotAnId")
       .expect(400)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("Bad Request!");
-      })
+      });
   });
 
   test("404: ID Not Found! when passed a valid number, but not existing article_id", () => {
     return request(app)
       .get("/api/articles/1000")
       .expect(404)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("ID Not Found!");
-      })
+      });
   });
 });
 
@@ -102,21 +104,20 @@ describe("GET /api/articles", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
-      .then(({body}) => {
+      .then(({ body }) => {
         const articles = body.articles;
         expect(articles).toHaveLength(13);
         expect(typeof articles).toBe("object");
         articles.forEach((article) => {
           expect(article).toEqual({
-          article_id: expect.any(Number),
-          title: expect.any(String),
-          topic: expect.any(String),
-          author: expect.any(String),
-          created_at: expect.any(String),
-          votes: expect.any(Number),
-          article_img_url:
-          expect.any(String),
-          comment_count: expect.any(Number)
+            article_id: expect.any(Number),
+            title: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            article_img_url: expect.any(String),
+            comment_count: expect.any(Number),
           });
         });
       });
@@ -137,19 +138,19 @@ describe("GET /api/articles/:article_id/comments", () => {
           {
             comment_id: 11,
             article_id: 3,
-            body: 'Ambidextrous marsupial',
+            body: "Ambidextrous marsupial",
             votes: 0,
-            author: 'icellusedkars',
-            created_at: '2020-09-19T23:10:00.000Z'
+            author: "icellusedkars",
+            created_at: "2020-09-19T23:10:00.000Z",
           },
           {
             comment_id: 10,
             article_id: 3,
-            body: 'git push origin master',
+            body: "git push origin master",
             votes: 0,
-            author: 'icellusedkars',
-            created_at: '2020-06-20T07:24:00.000Z'
-          }
+            author: "icellusedkars",
+            created_at: "2020-06-20T07:24:00.000Z",
+          },
         ]);
       });
   });
@@ -164,12 +165,12 @@ describe("GET /api/articles/:article_id/comments", () => {
         expect(typeof comments).toBe("object");
         comments.forEach((comment) => {
           expect(comment).toMatchObject({
-          comment_id: expect.any(Number),
-          article_id: expect.any(Number),
-          author: expect.any(String),
-          created_at: expect.any(String),
-          votes: expect.any(Number),
-          body: expect.any(String)
+            comment_id: expect.any(Number),
+            article_id: expect.any(Number),
+            author: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            body: expect.any(String),
           });
         });
       });
@@ -179,29 +180,28 @@ describe("GET /api/articles/:article_id/comments", () => {
     return request(app)
       .get("/api/articles/2/comments")
       .expect(200)
-      .then(({body: {comments}}) => {
+      .then(({ body: { comments } }) => {
         expect(comments).toEqual([]);
-      })
+      });
   });
 
   test("400: Bad Request! when a string passed instead of valid article_id", () => {
     return request(app)
       .get("/api/articles/NotAnId/comments")
       .expect(400)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("Bad Request!");
-      })
+      });
   });
 
   test("404: ID Not Found! when passed a valid number, but not existing article_id", () => {
     return request(app)
       .get("/api/articles/1000/comments")
       .expect(404)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("ID Not Found!");
-      })
+      });
   });
-
 });
 
 //6 - CORE: POST /api/articles/:article_id/comments
@@ -211,7 +211,7 @@ describe("POST /api/articles/:article_id/comments", () => {
       .post("/api/articles/4/comments")
       .send({
         username: "icellusedkars",
-        body: "New Comment Body"
+        body: "New Comment Body",
       })
       .expect(201)
       .then(({ body: { comment } }) => {
@@ -224,24 +224,23 @@ describe("POST /api/articles/:article_id/comments", () => {
             body: "New Comment Body",
             votes: 0,
             author: "icellusedkars",
-            created_at: expect.any(String)
-          }
+            created_at: expect.any(String),
+          },
         ]);
       });
   });
 
-  
   test("400: Bad Request! when a string passed instead of valid article_id", () => {
     return request(app)
       .post("/api/articles/NotAnId/comments")
       .send({
         username: "icellusedkars",
-        body: "New Comment Body"
+        body: "New Comment Body",
       })
       .expect(400)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("Bad Request!");
-      })
+      });
   });
 
   test("404: ID Not Found! when passed a valid number, but not existing article_id", () => {
@@ -249,12 +248,12 @@ describe("POST /api/articles/:article_id/comments", () => {
       .post("/api/articles/1000/comments")
       .send({
         username: "icellusedkars",
-        body: "New Comment Body"
+        body: "New Comment Body",
       })
       .expect(404)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("ID Not Found!");
-      })
+      });
   });
 
   test("404: User Not Found! when passed a non existing username", () => {
@@ -262,47 +261,47 @@ describe("POST /api/articles/:article_id/comments", () => {
       .post("/api/articles/2/comments")
       .send({
         username: "blabla",
-        body: "Another New Comment Body"
+        body: "Another New Comment Body",
       })
       .expect(404)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("User Not Found in users table!");
-      })
+      });
   });
 
   test("400: Bad Request! No username provided! when passed a request with missing username", () => {
     return request(app)
       .post("/api/articles/2/comments")
       .send({
-        body: "Another New Comment Body"
+        body: "Another New Comment Body",
       })
       .expect(400)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("Bad Request! No username provided!");
-      })
+      });
   });
 
-  test("400: Bad Request! No comment body provided! when passed a request with missing username", () => {
+  test("400: Bad Request! No comment body provided! when passed a request with missing comment body", () => {
     return request(app)
       .post("/api/articles/2/comments")
       .send({
-        username: "icellusedkars"
+        username: "icellusedkars",
       })
       .expect(400)
-      .then(({body}) => {
+      .then(({ body }) => {
         expect(body.msg).toBe("Bad Request! No comment body provided!");
-      })
+      });
   });
 });
 
 //7 - CORE: PATCH /api/articles/:article_id
-describe("PATCH /api/articles/:article_id/", () => {
+describe("PATCH /api/articles/:article_id", () => {
   test("200: responds with updated article (POSITIVE value of votes property if POSITIVE result after adding new votes)", () => {
     return request(app)
       .patch("/api/articles/3")
-      .send({inc_votes: 1})
+      .send({ inc_votes: 1 })
       .expect(200)
-      .then(({ body: { article  }}) => {
+      .then(({ body: { article } }) => {
         expect(article).toEqual({
           article_id: 3,
           title: "Eight pug gifs that remind me of mitch",
@@ -312,17 +311,17 @@ describe("PATCH /api/articles/:article_id/", () => {
           created_at: "2020-11-03T09:12:00.000Z",
           votes: 1,
           article_img_url:
-          "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
-      });
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+        });
       });
   });
 
   test("200: responds with updated article (votes property value equal to 0 if NEGATIVE result after adding new votes)", () => {
     return request(app)
       .patch("/api/articles/3")
-      .send({inc_votes: -100})
+      .send({ inc_votes: -100 })
       .expect(200)
-      .then(({ body: { article  }}) => {
+      .then(({ body: { article } }) => {
         expect(article).toEqual({
           article_id: 3,
           title: "Eight pug gifs that remind me of mitch",
@@ -332,8 +331,38 @@ describe("PATCH /api/articles/:article_id/", () => {
           created_at: "2020-11-03T09:12:00.000Z",
           votes: 0,
           article_img_url:
-          "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+            "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+        });
       });
+  });
+});
+
+//8 - CORE: DELETE /api/comments/:comment_id
+describe(" DELETE /api/comments/:comment_id", () => {
+  test("204: responds with status 204 and no content", () => {
+    return request(app)
+      .delete("/api/comments/3")
+      .expect(204)
+      .then(({ body }) => {
+        expect(body).toEqual({});
+      });
+  });
+
+  test("400: Bad Request! when a string passed instead of valid comment_id", () => {
+    return request(app)
+      .delete("/api/comments/NotAnId")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request!");
+      });
+  });
+
+  test("404: Comment Not Found! when passed a valid number, but not existing comment_id", () => {
+    return request(app)
+      .delete("/api/comments/1000")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Comment Not Found in comments table!");
       });
   });
 });

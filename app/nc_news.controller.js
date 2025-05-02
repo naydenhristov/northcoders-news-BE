@@ -6,7 +6,9 @@ const {
   selectCommentsByArticleId,
   insertCommenttByArticleId,
   validUsername,
-  updateArticleByID
+  updateArticleByID,
+  removeCommentByID,
+  validCommentById,
 } = require("./nc_news.model");
 
 exports.getApi = (req, res) => {
@@ -56,10 +58,10 @@ exports.postCommentsByArticleId = (req, res, next) => {
   const { article_id } = req.params;
   const newComment = req.body;
   if (!newComment.hasOwnProperty("username")) {
-    res.status(400).send({msg: "Bad Request! No username provided!"});
+    return res.status(400).send({ msg: "Bad Request! No username provided!" });
   }
   if (!newComment.hasOwnProperty("body")) {
-    res.status(400).send({msg: "Bad Request! No comment body provided!"});
+    return res.status(400).send({ msg: "Bad Request! No comment body provided!" });
   }
   const validUser = validUsername(newComment.username);
 
@@ -75,11 +77,25 @@ exports.postCommentsByArticleId = (req, res, next) => {
 };
 
 exports.patchArticleById = (req, res) => {
-  const {article_id} = req.params;
+  const { article_id } = req.params;
   const patchBody = req.body;
 
   updateArticleByID(article_id, patchBody).then((article) => {
-    res.status(200).send({article});
-    
-  })
-}
+    res.status(200).send({ article });
+  });
+};
+
+exports.deleteCommentById = (req, res, next) => {
+  const { comment_id } = req.params;
+  const validComment = validCommentById(comment_id);
+
+  Promise.all([validComment])
+    .then(() => {
+      return removeCommentByID(comment_id)
+        .then(() => {
+          res.status(204).send();
+        })
+        .catch(next);
+    })
+    .catch(next);
+};
