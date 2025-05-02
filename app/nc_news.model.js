@@ -104,6 +104,23 @@ exports.updateArticleByID = (article_id, patchBody) => {
     });
 };
 
+exports.validArticleById = (article_id) => {
+  return db
+    .query("SELECT article_id FROM articles WHERE article_id = $1", [
+      article_id,
+    ])
+    .then((result) => {
+      if (!result.rows.length) {
+        return Promise.reject({
+          status: 404,
+          msg: "Invalid ID - Article Not Found in articles table!",
+        });
+      }
+      return;
+      //return result.rows[0]; -> if needed at a later stage
+    });
+};
+
 exports.removeCommentByID = (comment_id) => {
   return db.query(
     `DELETE FROM comments
@@ -121,7 +138,7 @@ exports.validCommentById = (comment_id) => {
       if (!result.rows.length) {
         return Promise.reject({
           status: 404,
-          msg: "Comment Not Found in comments table!",
+          msg: "Invalid ID - Comment Not Found in comments table!",
         });
       }
       return;
