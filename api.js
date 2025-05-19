@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const {
   getApi,
@@ -13,6 +14,8 @@ const {
 } = require("./app/nc_news.controller");
 const { handlePSQLErrors, handleCustomErrors, handleServerErrors } =
   require("./errors/errors");
+
+app.use(cors());
 
 app.use(express.json());
 
